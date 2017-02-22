@@ -20,14 +20,19 @@ RUN mv /data/rcloud/htdocs/mathjax /mathjax \
 ADD rcloud /data/rcloud
 ADD rcloud.solr /data/rcloud/rcloud.packages/rcloud.solr
 
+# @TODO Copy the docker html files somewhere and then get init.sh to symlink.
+
 # Put mathjax back
 RUN mv /mathjax /data/rcloud/htdocs/
 
+# Put our own conf file in
+ADD docker-rcloud-dev/rcloud.conf /data/rcloud/conf/rcloud.conf
+
 RUN chown -R rcloud:rcloud /data/rcloud
 
-# RUN cd /data/rcloud && git apply docker/domainCookie.patch
-# RUN cd /data/rcloud \
-#         && scripts/build.sh --all
+RUN cd /data/rcloud && git apply docker/domainCookie.patch
+RUN cd /data/rcloud \
+         && scripts/build.sh --all
 
 # @TODO Add npm and grunt?
 
