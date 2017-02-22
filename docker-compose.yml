@@ -1,0 +1,11 @@
+services:
+  rcloud:
+    image: rcdev
+    ports:
+    - "8080:8080"
+    volumes:
+    - rcloud:/data/rcloud
+    - rcloud.sol:/pkgs/rcloud.solr
+container_name: rcloud
+  solr:
+    image: rcsolr
