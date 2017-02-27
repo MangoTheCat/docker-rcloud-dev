@@ -11,30 +11,14 @@ FROM rcl0ud/rcloud
 
 # Remove old RCloud installation
 
-RUN mv /data/rcloud/htdocs/mathjax /mathjax \
-    && rm -rf /data/rcloud
-
-
-# Copy in the new rcloud files
-# @TODO shouldn't these be mounted not added?
-ADD rcloud /data/rcloud
-ADD rcloud.solr /data/rcloud/rcloud.packages/rcloud.solr
-
-# @TODO Copy the docker html files somewhere and then get init.sh to symlink.
-
-# Put mathjax back
-RUN mv /mathjax /data/rcloud/htdocs/
+# Copy out mathjax, might copy it back (or symlink)
+RUN mkdir /save \
+    && mv /data/rcloud/htdocs/mathjax /save/mathjax
 
 # Put our own conf file in
-ADD docker-rcloud-dev/rcloud.conf /data/rcloud/conf/rcloud.conf
-
-RUN chown -R rcloud:rcloud /data/rcloud
-
-RUN cd /data/rcloud && git apply docker/domainCookie.patch
-RUN cd /data/rcloud \
-         && scripts/build.sh --all
-
-# @TODO Add npm and grunt?
+ADD docker-rcloud-dev/rcloud.conf /save/rcloud.conf
+RUN chown -R rcloud:rcloud /save
+ADD docker-rcloud-dev/init.sh /bin/init.sh
 
 EXPOSE 8080
 
