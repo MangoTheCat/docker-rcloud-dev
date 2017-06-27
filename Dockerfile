@@ -18,8 +18,12 @@ RUN apt-get update && apt-get install -y gnupg \
   && apt-get update && apt-get install -y \
   nodejs=6*
 
+# Setup local node_modules and grunt
 RUN cd /data/rcloud \
-  && npm install
+  && mv Grunfile.js Gruntfile.js \
+  && npm install \
+  && npm install grunt --save-dev \
+  && chown -R rcloud:rcloud /data/rcloud/node_modules
 
 # Remove old RCloud installation
 
