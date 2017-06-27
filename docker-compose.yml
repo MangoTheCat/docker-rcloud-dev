@@ -1,10 +1,11 @@
+version: '2'
 services:
   rcloud:
-    image: rcdev
+    image: mangothecat/rcloud-dev
     ports:
     - "8080:8080"
     volumes:
     - rcloud:/data/rcloud
     - rcloud.sol:/pkgs/rcloud.solr
   solr:
-    image: rcsolr
+    image: mangothecat/rcloud-solr
