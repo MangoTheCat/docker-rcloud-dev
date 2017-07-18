@@ -33,8 +33,10 @@ RUN mkdir /save \
 
 # Put our own conf file in
 ADD rcloud.conf /save/rcloud.conf
-RUN chown -R rcloud:rcloud /save
+RUN chown -R rcloud:rcloud /save 
 ADD init.sh /bin/init.sh
+RUN chmod 755 /bin/init.sh
+
 
 EXPOSE 8080
 
